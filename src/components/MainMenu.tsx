@@ -8,7 +8,7 @@ export const MainMenu = () => {
           <Navbar.Brand href="/"><h1>Книга контактов</h1></Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/groups">Группы</Nav.Link>
-            <Nav.Link href="/favorit">Избранное</Nav.Link>
+            <Nav.Link href="/favorite">Избранное</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

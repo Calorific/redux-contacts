@@ -9,13 +9,13 @@ export interface FilterFormValues {
   groupId: string
 }
 
-interface FilterFormProps extends FormikConfig<Partial<FilterFormValues>> {
+interface FilterFormProps extends FormikConfig<FilterFormValues> {
   groupContactsList: GroupContactsDto[]
 }
 
 export const FilterForm = memo<FilterFormProps>(({
  onSubmit,
- initialValues = {},
+ initialValues = { name: '', groupId: '' },
  groupContactsList
 }) => {
   return (
