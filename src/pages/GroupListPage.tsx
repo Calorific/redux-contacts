@@ -1,12 +1,13 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
-import { useGetGroupsQuery } from 'src/redux/contacts'
+import { contactStore } from 'src/store/contactStore'
+import { observer } from 'mobx-react-lite'
 
-export const GroupListPage = memo(() => {
-  const { data: groups } = useGetGroupsQuery()
+export const GroupListPage = observer(() => {
+  const groups = contactStore.groups
 
-  if (!groups)
+  if (contactStore.groupLoading)
     return <h2>Загрузка...</h2>
 
   return (

@@ -1,17 +1,18 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { GroupContactsCard } from 'src/components/GroupContactsCard'
 import { Empty } from 'src/components/Empty'
 import { ContactCard } from 'src/components/ContactCard'
-import { useGetContactsQuery, useGetGroupsQuery } from 'src/redux/contacts'
+import { contactStore } from 'src/store/contactStore'
+import { observer } from 'mobx-react-lite'
 
-export const GroupPage = memo(() => {
+export const GroupPage = observer(() => {
   const { groupId } = useParams<{ groupId: string }>()
-  const { data: groups } = useGetGroupsQuery()
-  const { data: allContacts } = useGetContactsQuery()
+  const allContacts = contactStore.contacts
+  const groups = contactStore.groups
 
-  if (!groups || !allContacts)
+  if (contactStore.contactsLoading || contactStore.groupLoading)
     return <h2>Загрузка...</h2>
 
   const group = groups.find(g => g.id === groupId)

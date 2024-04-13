@@ -1,15 +1,15 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
-import { useAppSelector } from 'src/redux/hooks'
-import { useGetContactsQuery } from 'src/redux/contacts'
+import { contactStore } from 'src/store/contactStore'
+import { observer } from 'mobx-react-lite'
 
-export const FavoriteListPage = memo(() => {
-  const { data: contacts, isLoading } = useGetContactsQuery()
-  const favouritesIds = useAppSelector(state => state.contacts?.favorites)
+export const FavoriteListPage = observer(() => {
+  const contacts = contactStore.contacts
+  const favouritesIds = contactStore.favorites
   const favourites = contacts?.filter(c => favouritesIds.includes(c.id))
 
-  if (isLoading)
+  if (contactStore.contactsLoading)
     return <h2>Загрузка...</h2>
 
   if (!favourites)

@@ -3,14 +3,15 @@ import { Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { ContactCard } from 'src/components/ContactCard'
 import { Empty } from 'src/components/Empty'
-import { useGetContactsQuery } from 'src/redux/contacts'
+import { observer } from 'mobx-react-lite'
+import { contactStore } from 'src/store/contactStore'
 
 
-export const ContactPage: FC = () => {
+export const ContactPage: FC = observer(() => {
   const { contactId } = useParams<{ contactId: string }>()
-  const { data: contacts } = useGetContactsQuery()
+  const contacts = contactStore.contacts
 
-  if (!contacts)
+  if (contactStore.contactsLoading)
       return <h2>Загрузка...</h2>
 
   const contact = contacts.find(c => c.id === contactId)
@@ -22,4 +23,4 @@ export const ContactPage: FC = () => {
       </Col>
     </Row>
   )
-}
+})

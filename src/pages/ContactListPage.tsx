@@ -1,16 +1,17 @@
-import React, { memo, useState } from 'react'
+import React, { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { ContactCard } from 'src/components/ContactCard'
 import { FilterForm, FilterFormValues } from 'src/components/FilterForm'
-import { useGetContactsQuery, useGetGroupsQuery } from 'src/redux/contacts'
+import { observer } from 'mobx-react-lite'
+import { contactStore } from 'src/store/contactStore'
 
 
-export const ContactListPage = memo(() => {
-  const { data: contacts } = useGetContactsQuery()
-  const { data: groups } = useGetGroupsQuery()
+export const ContactListPage = observer(() => {
+  const contacts = contactStore.contacts
+  const groups = contactStore.groups
   const [filter, setFilter] = useState<FilterFormValues>({ name: '', groupId: '' })
 
-  if (!contacts || !groups)
+  if (contactStore.contactsLoading || contactStore.groupLoading)
     return <h2>Загрузка...</h2>
 
   let filtered = contacts
